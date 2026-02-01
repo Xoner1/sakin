@@ -69,11 +69,7 @@ class PermissionService {
 
     // 2. Schedule Exact Alarm (Android 12+)
     if (Platform.isAndroid) {
-      var alarmStatus = await Permission.scheduleExactAlarm.status;
-      if (alarmStatus.isDenied) {
-        // This permission must be granted via settings on some versions
-        alarmStatus = await Permission.scheduleExactAlarm.request();
-      }
+      await requestExactAlarmPermission();
     }
 
     // 3. System Alert Window (For full screen intent on some ROMs)
@@ -83,5 +79,33 @@ class PermissionService {
     }
 
     return status.isGranted;
+  }
+
+  /// Specialized handler for Exact Alarms on Android 13/14+
+  Future<bool> requestExactAlarmPermission() async {
+    if (!Platform.isAndroid) return true;
+
+    var status = await Permission.scheduleExactAlarm.status;
+
+    if (status.isGranted) return true;
+
+    // Try requesting first
+    status = await Permission.scheduleExactAlarm.request();
+
+    if (status.isGranted) return true;
+
+    // If still denied (common on Android 14+), guide the user to settings
+    try {
+      await const AndroidIntent(
+        action: 'android.settings.REQUEST_SCHEDULE_EXACT_ALARM',
+        data:
+            'package:com.example.sakin_app', // Fallback, updated in UI if needed
+        flags: [Flag.FLAG_ACTIVITY_NEW_TASK],
+      ).launch();
+    } catch (e) {
+      await openAppSettings();
+    }
+
+    return false;
   }
 }

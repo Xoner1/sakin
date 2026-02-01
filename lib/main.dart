@@ -6,12 +6,12 @@ import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sakin_app/l10n/generated/app_localizations.dart';
-import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 
 import 'package:timezone/data/latest.dart' as tz;
 
 import 'presentation/screens/settings_screen.dart';
 import 'presentation/screens/adhan_alarm_page.dart';
+import 'services/permission_service.dart';
 
 import 'core/theme.dart';
 import 'services/prayer_service.dart';
@@ -19,7 +19,7 @@ import 'services/notification_service.dart';
 import 'services/location_service.dart';
 import 'services/settings_service.dart';
 import 'services/battery_optimization_service.dart';
-import 'services/background_service_new.dart';
+import 'services/alarm_service.dart'; // New Service
 
 import 'data/hive_database.dart';
 import 'presentation/widgets/nav_bar.dart';
@@ -40,9 +40,6 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize foreground service
-  initFlutterAndroidBackgroundService();
-
   // 0. Initialize date formatting locale
   await initializeDateFormatting('ar', null);
   tz.initializeTimeZones();
@@ -59,15 +56,13 @@ void main() async {
 
   if (!permissionsRequested) {
     debugPrint('Requesting permissions for the first time...');
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.notification,
-      Permission.scheduleExactAlarm,
-      Permission.location,
-    ].request();
 
-    debugPrint('Notification Permission: ${statuses[Permission.notification]}');
-    debugPrint(
-        'Schedule Alarm Permission: ${statuses[Permission.scheduleExactAlarm]}');
+    // Use the robust PermissionService
+    final permissionService = PermissionService();
+    await permissionService.requestNotificationPermissions();
+
+    // Also request location specifically for the first time
+    await Permission.location.request();
 
     // Mark as requested preventing future prompts
     await settingsBox.put('permissions_requested', true);
@@ -91,29 +86,6 @@ void main() async {
   };
 
   runApp(SakinApp(hiveDb: hiveDb, locationService: locationService));
-}
-
-// Initialize Foreground Service configuration
-void initFlutterAndroidBackgroundService() {
-  FlutterForegroundTask.init(
-    androidNotificationOptions: AndroidNotificationOptions(
-      channelId: 'sakin_foreground_service',
-      channelName: 'Sakin Service',
-      channelDescription: 'Running in background for prayer times',
-      channelImportance: NotificationChannelImportance.LOW,
-      priority: NotificationPriority.LOW,
-    ),
-    iosNotificationOptions: const IOSNotificationOptions(
-      showNotification: true,
-      playSound: false,
-    ),
-    foregroundTaskOptions: ForegroundTaskOptions(
-      eventAction: ForegroundTaskEventAction.repeat(60000),
-      autoRunOnBoot: true,
-      allowWakeLock: true,
-      allowWifiLock: true,
-    ),
-  );
 }
 
 class SakinApp extends StatelessWidget {
@@ -254,28 +226,14 @@ class _MainLayoutState extends State<MainLayout> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       BatteryOptimizationService.checkAndPrompt(context);
       _checkNotificationLaunch();
-      _startForegroundService(); // Start new service
 
-      // Schedule notifications on start
-      _scheduleInitialNotifications();
+      // NEW: Alarm-Style Scheduling
+      await PrayerAlarmScheduler.scheduleSevenDays();
+      await PrayerAlarmScheduler.checkAndNotifyTTL();
     });
   }
 
-  void _scheduleInitialNotifications() {
-    final prayerService = Provider.of<PrayerService>(context, listen: false);
-    final settingsService =
-        Provider.of<SettingsService>(context, listen: false);
-
-    prayerService.scheduleNotifications(settingsService.settings);
-  }
-
-  void _startForegroundService() {
-    FlutterForegroundTask.startService(
-      notificationTitle: 'Sakin Service',
-      notificationText: 'Running...',
-      callback: startCallback,
-    );
-  }
+  /* Removed legacy background service calls */
 
   Future<void> _checkNotificationLaunch() async {
     final bool launchedFromAdhan =

@@ -3,6 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../models/location_info.dart';
+import 'alarm_service.dart';
 
 class LocationService with ChangeNotifier {
   LocationInfo? _currentLocation;
@@ -80,6 +81,9 @@ class LocationService with ChangeNotifier {
 
       // Save location to Hive
       await _saveLocationToCache(_currentLocation!);
+
+      // Trigger prayer scheduling for the new location
+      await PrayerAlarmScheduler.scheduleSevenDays();
 
       _isLoading = false;
       notifyListeners();
