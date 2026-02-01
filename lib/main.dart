@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -72,7 +73,10 @@ void main() async {
 
   // 3. Initialize Services
   await NotificationService.init();
-  await AndroidAlarmManager.initialize(); // Initialize Alarm Manager
+  if (Platform.isAndroid) {
+    await AndroidAlarmManager
+        .initialize(); // Initialize Alarm Manager (Android only)
+  }
 
   // 5. Initialize Location Service
   final locationService = LocationService();

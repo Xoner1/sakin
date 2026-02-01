@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:adhan/adhan.dart';
 import 'package:intl/intl.dart' as intl;
+import 'dart:io';
 import 'adhan_player.dart';
 
 // Callback to handle notification taps
@@ -22,8 +23,18 @@ class NotificationService {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('notification_icon');
 
+    const DarwinInitializationSettings initializationSettingsDarwin =
+        DarwinInitializationSettings(
+      requestSoundPermission: false,
+      requestBadgePermission: false,
+      requestAlertPermission: false,
+    );
+
     const InitializationSettings initializationSettings =
-        InitializationSettings(android: initializationSettingsAndroid);
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsDarwin,
+    );
 
     await _notificationsPlugin.initialize(
       initializationSettings,
@@ -164,17 +175,19 @@ class NotificationService {
   // Schedule Adhan as an alarm using AndroidAlarmManager
   static Future<void> scheduleAdhan(
       int id, String prayerName, DateTime prayerTime) async {
-    // Use AlarmManager to ensure execution even in Doze Mode
-    await AndroidAlarmManager.oneShotAt(
-      prayerTime,
-      id,
-      adhanAlarmCallback,
-      exact: true,
-      wakeup: true,
-      alarmClock: true,
-      rescheduleOnReboot: true,
-      params: {'prayerName': prayerName},
-    );
+    if (Platform.isAndroid) {
+      // Use AlarmManager to ensure execution even in Doze Mode
+      await AndroidAlarmManager.oneShotAt(
+        prayerTime,
+        id,
+        adhanAlarmCallback,
+        exact: true,
+        wakeup: true,
+        alarmClock: true,
+        rescheduleOnReboot: true,
+        params: {'prayerName': prayerName},
+      );
+    }
   }
 
   // This function runs in a background isolate
@@ -221,20 +234,24 @@ class NotificationService {
     // Initial show
     await _updateStickyNotification({'lat': lat, 'long': long});
 
-    // Schedule recursive updates
-    await AndroidAlarmManager.periodic(
-      const Duration(minutes: 1),
-      _stickyAlarmId,
-      _stickyNotificationCallback,
-      exact: true,
-      wakeup: true, // Wake up to update time
-      rescheduleOnReboot: true,
-      params: {'lat': lat, 'long': long},
-    );
+    if (Platform.isAndroid) {
+      // Schedule recursive updates
+      await AndroidAlarmManager.periodic(
+        const Duration(minutes: 1),
+        _stickyAlarmId,
+        _stickyNotificationCallback,
+        exact: true,
+        wakeup: true, // Wake up to update time
+        rescheduleOnReboot: true,
+        params: {'lat': lat, 'long': long},
+      );
+    }
   }
 
   static Future<void> stopStickyNotificationLoop() async {
-    await AndroidAlarmManager.cancel(_stickyAlarmId);
+    if (Platform.isAndroid) {
+      await AndroidAlarmManager.cancel(_stickyAlarmId);
+    }
     await _notificationsPlugin.cancel(_stickyNotificationId);
   }
 
