@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../widgets/prayer_adjustment_dialog.dart';
@@ -82,11 +83,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: ListTile(
-                leading: const Icon(Icons.timer_outlined,
-                    color: AppTheme.primaryColor),
+                leading: const HugeIcon(
+                  icon: HugeIcons.strokeRoundedTimer02,
+                  color: AppTheme.primaryColor,
+                ),
                 title: const Text('تعديل المواقيت يدوياً'),
                 subtitle: const Text('زيادة أو نقص دقائق عن المواقيت المحسوبة'),
-                trailing: const Icon(Icons.chevron_right),
+                trailing:
+                    const HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
                 onTap: () {
                   showDialog(
                     context: context,
@@ -113,8 +117,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     'assets/images/app_icon.png',
                     height: 80,
                     width: 80,
-                    errorBuilder: (c, e, s) => const Icon(Icons.mosque,
-                        size: 60, color: AppTheme.primaryColor),
+                    errorBuilder: (c, e, s) => const HugeIcon(
+                        icon: HugeIcons.strokeRoundedMosque01,
+                        size: 60,
+                        color: AppTheme.primaryColor),
                   ),
                   const SizedBox(height: 15),
                   const Text(
@@ -140,7 +146,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Center(
               child: Column(
                 children: [
-                  const Icon(Icons.favorite, color: Colors.redAccent, size: 28),
+                  const HugeIcon(
+                    icon: HugeIcons.strokeRoundedFavourite,
+                    color: Colors.redAccent,
+                    size: 28,
+                  ),
                   const SizedBox(height: 10),
                   Text(
                     l10n.supplication,
@@ -182,7 +192,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return ListTile(
       title: Text(title, style: const TextStyle(fontSize: 16)),
       trailing: isSelected
-          ? const Icon(Icons.check_circle, color: AppTheme.primaryColor)
+          ? const HugeIcon(
+              icon: HugeIcons.strokeRoundedCheckmarkCircle01,
+              color: AppTheme.primaryColor)
           : null,
       onTap: () {
         settings.setLocale(itemLocale);

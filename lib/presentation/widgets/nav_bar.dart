@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 import '../../core/theme.dart';
 
 class CustomNavBar extends StatelessWidget {
@@ -36,12 +37,49 @@ class CustomNavBar extends StatelessWidget {
           elevation: 0,
           items: const [
             BottomNavigationBarItem(
-                icon: Icon(Icons.home_rounded), label: 'Home'),
+              icon: HugeIcon(
+                icon: HugeIcons.strokeRoundedHome01,
+                color: Colors.grey,
+              ),
+              activeIcon: HugeIcon(
+                icon: HugeIcons.strokeRoundedHome01,
+                color: AppTheme.primaryColor,
+              ),
+              label: 'Home',
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.check_circle_outline), label: 'Habits'),
-            BottomNavigationBarItem(icon: Icon(Icons.mosque), label: 'Prayer'),
+              icon: HugeIcon(
+                icon: HugeIcons.strokeRoundedTask01,
+                color: Colors.grey,
+              ),
+              activeIcon: HugeIcon(
+                icon: HugeIcons.strokeRoundedTask01,
+                color: AppTheme.primaryColor,
+              ),
+              label: 'Habits',
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: 'Settings'),
+              icon: HugeIcon(
+                icon: HugeIcons.strokeRoundedCompass01,
+                color: Colors.grey,
+              ),
+              activeIcon: HugeIcon(
+                icon: HugeIcons.strokeRoundedCompass01,
+                color: AppTheme.primaryColor,
+              ),
+              label: 'Prayer',
+            ),
+            BottomNavigationBarItem(
+              icon: HugeIcon(
+                icon: HugeIcons.strokeRoundedSettings01,
+                color: Colors.grey,
+              ),
+              activeIcon: HugeIcon(
+                icon: HugeIcons.strokeRoundedSettings01,
+                color: AppTheme.primaryColor,
+              ),
+              label: 'Settings',
+            ),
           ],
         ),
       ),

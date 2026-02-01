@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme.dart';
 import '../../data/hive_database.dart';
@@ -223,8 +224,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Spacer(),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.timer,
+                        const HugeIcon(
+                          icon: HugeIcons.strokeRoundedTimer02,
                           color: Colors.white70,
                           size: 16,
                         ),
@@ -269,7 +270,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       _buildSunnahTime(
                         l10n.midnight,
                         formatTime(midnightAdhan.startTime),
-                        Icons.nightlight_round,
+                        HugeIcons.strokeRoundedMoon01,
                       ),
                       Container(
                         width: 1,
@@ -279,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       _buildSunnahTime(
                         l10n.lastThird,
                         formatTime(lastThirdAdhan.startTime),
-                        Icons.star_rate_rounded,
+                        HugeIcons.strokeRoundedStar,
                       ),
                     ],
                   ),
@@ -290,7 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Expanded(
                     child: _QuickActionButton(
-                      icon: Icons.auto_stories,
+                      icon: HugeIcons.strokeRoundedBookOpen01,
                       label: l10n.adhkar,
                       onTap: () => Navigator.push(
                         context,
@@ -301,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: _QuickActionButton(
-                      icon: Icons.fingerprint,
+                      icon: HugeIcons.strokeRoundedFingerprintScan,
                       label: l10n.tasbih,
                       onTap: () => Navigator.push(
                         context,
@@ -326,8 +327,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(
-                      Icons.add_circle,
+                    icon: const HugeIcon(
+                      icon: HugeIcons.strokeRoundedAddCircle,
                       color: AppTheme.primaryColor,
                     ),
                     onPressed: () {
@@ -377,8 +378,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               trailing: IconButton(
-                                icon: const Icon(
-                                  Icons.delete_outline,
+                                icon: const HugeIcon(
+                                  icon: HugeIcons.strokeRoundedDelete02,
                                   color: Colors.redAccent,
                                 ),
                                 onPressed: () => hiveDb.deleteTask(task['key']),
@@ -395,12 +396,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildSunnahTime(String label, String time, IconData icon) {
+  Widget _buildSunnahTime(String label, String time, dynamic icon) {
     return Column(
       children: [
         Row(
           children: [
-            Icon(icon, size: 16, color: AppTheme.primaryColor),
+            HugeIcon(icon: icon, size: 16, color: AppTheme.primaryColor),
             const SizedBox(width: 4),
             Text(
               label,
@@ -460,7 +461,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 /// Quick Action Button widget
 class _QuickActionButton extends StatelessWidget {
-  final IconData icon;
+  final dynamic icon;
   final String label;
   final VoidCallback onTap;
 
@@ -485,7 +486,7 @@ class _QuickActionButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, color: AppTheme.primaryColor, size: 24),
+              HugeIcon(icon: icon, color: AppTheme.primaryColor, size: 24),
               const SizedBox(width: 10),
               Text(
                 label,

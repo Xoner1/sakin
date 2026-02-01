@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme.dart';
 import '../../services/prayer_service.dart';
@@ -45,31 +46,31 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
       {
         'name': 'الفجر',
         'prayer': Prayer.fajr,
-        'icon': Icons.wb_twilight,
+        'icon': HugeIcons.strokeRoundedSun01,
         'key': 'fajr'
       },
       {
         'name': 'الظهر',
         'prayer': Prayer.dhuhr,
-        'icon': Icons.wb_sunny_outlined,
+        'icon': HugeIcons.strokeRoundedSun01,
         'key': 'dhuhr'
       },
       {
         'name': 'العصر',
         'prayer': Prayer.asr,
-        'icon': Icons.light_mode,
+        'icon': HugeIcons.strokeRoundedSun01,
         'key': 'asr'
       },
       {
         'name': 'المغرب',
         'prayer': Prayer.maghrib,
-        'icon': Icons.nightlight,
+        'icon': HugeIcons.strokeRoundedSunset,
         'key': 'maghrib'
       },
       {
         'name': 'العشاء',
         'prayer': Prayer.isha,
-        'icon': Icons.nights_stay,
+        'icon': HugeIcons.strokeRoundedMoon01,
         'key': 'isha'
       },
     ];
@@ -103,8 +104,11 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.location_on,
-                        color: Colors.white70, size: 16),
+                    const HugeIcon(
+                      icon: HugeIcons.strokeRoundedLocation01,
+                      color: Colors.white70,
+                      size: 16,
+                    ),
                     const SizedBox(width: 5),
                     Text(
                       locationService.currentLocation?.address ??
@@ -115,8 +119,11 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                         LocationMode.cached)
                       const Padding(
                         padding: EdgeInsets.only(left: 5),
-                        child:
-                            Icon(Icons.cached, color: Colors.orange, size: 14),
+                        child: HugeIcon(
+                          icon: HugeIcons.strokeRoundedCloud,
+                          color: Colors.orange,
+                          size: 14,
+                        ),
                       ),
                   ],
                 ),
@@ -157,7 +164,9 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                             color: Colors.white,
                           ),
                         )
-                      : const Icon(Icons.refresh),
+                      : const HugeIcon(
+                          icon: HugeIcons.strokeRoundedRefresh,
+                        ),
                   label: Text(locationService.isLoading
                       ? 'جاري التحديث...'
                       : 'تحديث الموقع'),
@@ -227,8 +236,8 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                                   : Colors.grey.shade100,
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Icon(
-                              prayerData['icon'] as IconData,
+                            child: HugeIcon(
+                              icon: prayerData['icon'] as dynamic,
                               color:
                                   isNext ? Colors.white : AppTheme.primaryColor,
                               size: 24,
