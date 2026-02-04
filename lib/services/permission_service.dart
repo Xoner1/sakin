@@ -69,6 +69,7 @@ class PermissionService {
 
     // 2. Schedule Exact Alarm (Android 12+)
     if (Platform.isAndroid) {
+      // We wait for this to ensure we actually got the permission or at least tried.
       await requestExactAlarmPermission();
     }
 
@@ -94,8 +95,7 @@ class PermissionService {
     try {
       await const AndroidIntent(
         action: 'android.settings.REQUEST_SCHEDULE_EXACT_ALARM',
-        data:
-            'package:com.example.sakin_app', // Fallback, updated in UI if needed
+        data: 'package:com.example.sakin_app',
         flags: [Flag.FLAG_ACTIVITY_NEW_TASK],
       ).launch();
     } catch (e) {

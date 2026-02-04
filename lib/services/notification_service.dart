@@ -38,7 +38,7 @@ class NotificationService {
 
     await _notificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: _onNotificationTap,
+      onDidReceiveNotificationResponse: onNotificationTap,
     );
 
     // Create the notification channel for the foreground service
@@ -71,9 +71,9 @@ class NotificationService {
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(regularChannel);
 
-    // Create a special channel for Adhan (high priority with sound) - UPDATED V5
+    // Create a special channel for Adhan (high priority with sound) - UPDATED V6
     const AndroidNotificationChannel adhanChannel = AndroidNotificationChannel(
-      'sakin_adhan_v5', // Match the ID used in show()
+      'sakin_adhan_v6', // Match the ID used in show()
       'Adhan Alarm Final', // Match the name
       description: 'Full screen adhan notification',
       importance: Importance.max,
@@ -105,7 +105,8 @@ class NotificationService {
   }
 
   /// Handle notification interaction
-  static void _onNotificationTap(NotificationResponse response) {
+  @pragma('vm:entry-point')
+  static void onNotificationTap(NotificationResponse response) {
     debugPrint(
         '📱 Notification tapped: ${response.actionId} - ${response.payload}');
 
@@ -291,26 +292,38 @@ class NotificationService {
 @pragma('vm:entry-point')
 Future<void> adhanAlarmCallback(int id, Map<String, dynamic> params) async {
   final String prayerName = params['prayerName'] ?? 'Prayer';
-  debugPrint('⏰ Alarm Fired! Prayer: $prayerName');
+  debugPrint('⏰ [Background] Alarm Fired! Prayer: $prayerName');
 
-  // Try to wake the screen programmatically
+  // 1. Acquire Wakelock immediately to prevent sleep during setup
   try {
     await WakelockPlus.enable();
-    // Disable after 30 seconds to save battery
-    Future.delayed(const Duration(seconds: 30), () async {
+    // Disable after 3 minutes (max adhan duration) to be safe
+    Future.delayed(const Duration(minutes: 3), () async {
       await WakelockPlus.disable();
     });
   } catch (e) {
     debugPrint('Wakelock error: $e');
   }
 
-  // 2. Show fixed notification with stop button
-  await NotificationService.init(); // Ensure channel initialization
+  // 2. Initialize Notifications Plugin (Lightweight init)
+  final FlutterLocalNotificationsPlugin notificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-  // Android-specific settings to treat notification as an alarm
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('notification_icon');
+  const InitializationSettings initializationSettings =
+      InitializationSettings(android: initializationSettingsAndroid);
+
+  await notificationsPlugin.initialize(
+    initializationSettings,
+    onDidReceiveNotificationResponse: NotificationService.onNotificationTap,
+  );
+
+  // 3. Play Sound & Show Notification
+  // We recreate the channel details here to ensure they are fresh
   const AndroidNotificationDetails androidPlatformChannelSpecifics =
       AndroidNotificationDetails(
-    'sakin_adhan_v5', // New Channel ID to refresh settings
+    'sakin_adhan_v6', // BUMPED VERSION to force recreation
     'Adhan Alarm Final',
     channelDescription: 'Full screen adhan notification',
     importance: Importance.max,
@@ -319,15 +332,15 @@ Future<void> adhanAlarmCallback(int id, Map<String, dynamic> params) async {
     playSound: true,
     icon: 'notification_icon',
     largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
-    fullScreenIntent: true,
+    fullScreenIntent: true, // Critical for background
     category: AndroidNotificationCategory.alarm,
     visibility: NotificationVisibility.public,
     audioAttributesUsage: AudioAttributesUsage.alarm,
     enableVibration: true,
     autoCancel: false,
-    ongoing: true,
+    ongoing: true, // Cannot be dismissed by swipe
     color: Color.fromARGB(255, 67, 107, 62),
-    // ADDED: Stop Action
+    // ACTIONS
     actions: <AndroidNotificationAction>[
       AndroidNotificationAction(
         'stop_adhan',
@@ -343,9 +356,7 @@ Future<void> adhanAlarmCallback(int id, Map<String, dynamic> params) async {
     android: androidPlatformChannelSpecifics,
   );
 
-  final FlutterLocalNotificationsPlugin notificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
+  debugPrint('🔔 Showing Notification for $prayerName');
   await notificationsPlugin.show(
     id,
     'حان وقت صلاة $prayerName',
