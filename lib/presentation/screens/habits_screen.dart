@@ -165,12 +165,12 @@ class _HabitsScreenState extends State<HabitsScreen> {
             ),
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: const Row(
+            child: Row(
               children: [
-                Icon(Icons.edit, color: Colors.white),
-                SizedBox(width: 8),
-                Text('تعديل',
-                    style: TextStyle(
+                const Icon(Icons.edit, color: Colors.white),
+                const SizedBox(width: 8),
+                Text(AppLocalizations.of(context)!.edit,
+                    style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 16)),
@@ -184,16 +184,16 @@ class _HabitsScreenState extends State<HabitsScreen> {
             ),
             alignment: Alignment.centerRight,
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text('حذف',
-                    style: TextStyle(
+                Text(AppLocalizations.of(context)!.delete,
+                    style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 16)),
-                SizedBox(width: 8),
-                Icon(Icons.delete, color: Colors.white),
+                const SizedBox(width: 8),
+                const Icon(Icons.delete, color: Colors.white),
               ],
             ),
           ),
@@ -392,7 +392,7 @@ class _HabitsScreenState extends State<HabitsScreen> {
                 // Show success message
                 messenger.showSnackBar(
                   SnackBar(
-                    content: Text('تم حذف "$habitName" بنجاح'),
+                    content: Text('✓ $habitName'),
                     backgroundColor: Colors.red,
                     duration: const Duration(seconds: 2),
                     behavior: SnackBarBehavior.floating,
@@ -472,21 +472,21 @@ class _HabitsScreenState extends State<HabitsScreen> {
         children: [
           _buildStatCard(
             emoji: '🔥',
-            label: 'Current Streak',
-            value: '$_currentStreak يوم',
+            label: AppLocalizations.of(context)!.currentStreak,
+            value: '$_currentStreak ${AppLocalizations.of(context)!.days}',
             isDark: isDark,
           ),
           const SizedBox(width: 8),
           _buildStatCard(
             emoji: '⭐',
-            label: 'Best Streak',
-            value: '$_bestStreak يوم',
+            label: AppLocalizations.of(context)!.bestStreak,
+            value: '$_bestStreak ${AppLocalizations.of(context)!.days}',
             isDark: isDark,
           ),
           const SizedBox(width: 8),
           _buildStatCard(
             emoji: '📊',
-            label: 'Success Rate',
+            label: AppLocalizations.of(context)!.successRate,
             value: '$_monthSuccessRate%',
             isDark: isDark,
           ),
@@ -599,7 +599,16 @@ class _HabitsScreenState extends State<HabitsScreen> {
   }
 
   Widget _buildWeekdayLabels(bool isDark) {
-    final weekdays = ['ن', 'ث', 'خ', 'ج', 'س', 'ح', 'أ'];
+    final l10n = AppLocalizations.of(context)!;
+    final weekdays = [
+      l10n.sat,
+      l10n.sun,
+      l10n.mon,
+      l10n.tue,
+      l10n.wed,
+      l10n.thu,
+      l10n.fri
+    ];
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -700,7 +709,7 @@ class _HabitsScreenState extends State<HabitsScreen> {
     }
 
     return Text(
-      'إنجاز الشهر: $completedDays/$totalDays يوم',
+      '${AppLocalizations.of(context)!.monthAchievement}: $completedDays/$totalDays ${AppLocalizations.of(context)!.days}',
       style: TextStyle(
         fontSize: 12,
         color: isDark ? Colors.white60 : Colors.black54,
@@ -729,19 +738,20 @@ class _HabitsScreenState extends State<HabitsScreen> {
   }
 
   String _formatMonthYear(DateTime date) {
-    const months = [
-      'يناير',
-      'فبراير',
-      'مارس',
-      'أبريل',
-      'مايو',
-      'يونيو',
-      'يوليو',
-      'أغسطس',
-      'سبتمبر',
-      'أكتوبر',
-      'نوفمبر',
-      'ديسمبر'
+    final l10n = AppLocalizations.of(context)!;
+    final months = [
+      l10n.january,
+      l10n.february,
+      l10n.march,
+      l10n.april,
+      l10n.may,
+      l10n.june,
+      l10n.july,
+      l10n.august,
+      l10n.september,
+      l10n.october,
+      l10n.november,
+      l10n.december
     ];
     return '${months[date.month - 1]} ${date.year}';
   }

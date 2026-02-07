@@ -500,6 +500,150 @@ abstract class AppLocalizations {
   /// **'تقديم أو تأخير الوقت بالدقائق'**
   String get adjustTimeDesc;
 
+  /// No description provided for @monthAchievement.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنجاز الشهر'**
+  String get monthAchievement;
+
+  /// No description provided for @days.
+  ///
+  /// In ar, this message translates to:
+  /// **'يوم'**
+  String get days;
+
+  /// No description provided for @currentStreak.
+  ///
+  /// In ar, this message translates to:
+  /// **'السلسلة الحالية'**
+  String get currentStreak;
+
+  /// No description provided for @bestStreak.
+  ///
+  /// In ar, this message translates to:
+  /// **'أفضل سلسلة'**
+  String get bestStreak;
+
+  /// No description provided for @successRate.
+  ///
+  /// In ar, this message translates to:
+  /// **'معدل النجاح'**
+  String get successRate;
+
+  /// No description provided for @sun.
+  ///
+  /// In ar, this message translates to:
+  /// **'أ'**
+  String get sun;
+
+  /// No description provided for @mon.
+  ///
+  /// In ar, this message translates to:
+  /// **'ث'**
+  String get mon;
+
+  /// No description provided for @tue.
+  ///
+  /// In ar, this message translates to:
+  /// **'خ'**
+  String get tue;
+
+  /// No description provided for @wed.
+  ///
+  /// In ar, this message translates to:
+  /// **'ج'**
+  String get wed;
+
+  /// No description provided for @thu.
+  ///
+  /// In ar, this message translates to:
+  /// **'ح'**
+  String get thu;
+
+  /// No description provided for @fri.
+  ///
+  /// In ar, this message translates to:
+  /// **'س'**
+  String get fri;
+
+  /// No description provided for @sat.
+  ///
+  /// In ar, this message translates to:
+  /// **'ن'**
+  String get sat;
+
+  /// No description provided for @january.
+  ///
+  /// In ar, this message translates to:
+  /// **'يناير'**
+  String get january;
+
+  /// No description provided for @february.
+  ///
+  /// In ar, this message translates to:
+  /// **'فبراير'**
+  String get february;
+
+  /// No description provided for @march.
+  ///
+  /// In ar, this message translates to:
+  /// **'مارس'**
+  String get march;
+
+  /// No description provided for @april.
+  ///
+  /// In ar, this message translates to:
+  /// **'أبريل'**
+  String get april;
+
+  /// No description provided for @may.
+  ///
+  /// In ar, this message translates to:
+  /// **'مايو'**
+  String get may;
+
+  /// No description provided for @june.
+  ///
+  /// In ar, this message translates to:
+  /// **'يونيو'**
+  String get june;
+
+  /// No description provided for @july.
+  ///
+  /// In ar, this message translates to:
+  /// **'يوليو'**
+  String get july;
+
+  /// No description provided for @august.
+  ///
+  /// In ar, this message translates to:
+  /// **'أغسطس'**
+  String get august;
+
+  /// No description provided for @september.
+  ///
+  /// In ar, this message translates to:
+  /// **'سبتمبر'**
+  String get september;
+
+  /// No description provided for @october.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكتوبر'**
+  String get october;
+
+  /// No description provided for @november.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوفمبر'**
+  String get november;
+
+  /// No description provided for @december.
+  ///
+  /// In ar, this message translates to:
+  /// **'ديسمبر'**
+  String get december;
+
   /// No description provided for @selectLocation.
   ///
   /// In ar, this message translates to:

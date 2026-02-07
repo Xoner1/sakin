@@ -215,5 +215,77 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adjustTimeDesc => 'Adjust time by minutes';
 
   @override
+  String get monthAchievement => 'Month Achievement';
+
+  @override
+  String get days => 'days';
+
+  @override
+  String get currentStreak => 'Current Streak';
+
+  @override
+  String get bestStreak => 'Best Streak';
+
+  @override
+  String get successRate => 'Success Rate';
+
+  @override
+  String get sun => 'S';
+
+  @override
+  String get mon => 'M';
+
+  @override
+  String get tue => 'T';
+
+  @override
+  String get wed => 'W';
+
+  @override
+  String get thu => 'T';
+
+  @override
+  String get fri => 'F';
+
+  @override
+  String get sat => 'S';
+
+  @override
+  String get january => 'January';
+
+  @override
+  String get february => 'February';
+
+  @override
+  String get march => 'March';
+
+  @override
+  String get april => 'April';
+
+  @override
+  String get may => 'May';
+
+  @override
+  String get june => 'June';
+
+  @override
+  String get july => 'July';
+
+  @override
+  String get august => 'August';
+
+  @override
+  String get september => 'September';
+
+  @override
+  String get october => 'October';
+
+  @override
+  String get november => 'November';
+
+  @override
+  String get december => 'December';
+
+  @override
   String get selectLocation => 'Select Location';
 }

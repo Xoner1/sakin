@@ -214,5 +214,77 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adjustTimeDesc => 'تقديم أو تأخير الوقت بالدقائق';
 
   @override
+  String get monthAchievement => 'إنجاز الشهر';
+
+  @override
+  String get days => 'يوم';
+
+  @override
+  String get currentStreak => 'السلسلة الحالية';
+
+  @override
+  String get bestStreak => 'أفضل سلسلة';
+
+  @override
+  String get successRate => 'معدل النجاح';
+
+  @override
+  String get sun => 'أ';
+
+  @override
+  String get mon => 'ث';
+
+  @override
+  String get tue => 'خ';
+
+  @override
+  String get wed => 'ج';
+
+  @override
+  String get thu => 'ح';
+
+  @override
+  String get fri => 'س';
+
+  @override
+  String get sat => 'ن';
+
+  @override
+  String get january => 'يناير';
+
+  @override
+  String get february => 'فبراير';
+
+  @override
+  String get march => 'مارس';
+
+  @override
+  String get april => 'أبريل';
+
+  @override
+  String get may => 'مايو';
+
+  @override
+  String get june => 'يونيو';
+
+  @override
+  String get july => 'يوليو';
+
+  @override
+  String get august => 'أغسطس';
+
+  @override
+  String get september => 'سبتمبر';
+
+  @override
+  String get october => 'أكتوبر';
+
+  @override
+  String get november => 'نوفمبر';
+
+  @override
+  String get december => 'ديسمبر';
+
+  @override
   String get selectLocation => 'اختر الموقع';
 }
