@@ -48,3 +48,6 @@ app.*.map.json
 web/
 build/web/
 
+# Secrets
+key.properties
+**/*.jks

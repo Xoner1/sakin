@@ -1,4 +1,4 @@
-package com.example.sakin_app
+package com.xoner1.sakin
 
 import android.media.AudioAttributes
 import android.media.MediaPlayer
@@ -8,7 +8,7 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
-    private val CHANNEL = "com.example.sakin_app/adhan_playback"
+    private val CHANNEL = "com.xoner1.sakin/adhan_playback"
     private var mediaPlayer: MediaPlayer? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
@@ -76,4 +76,3 @@ class MainActivity : FlutterActivity() {
         super.onDestroy()
     }
 }
-

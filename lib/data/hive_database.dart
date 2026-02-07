@@ -10,7 +10,7 @@ class HiveDatabase with ChangeNotifier {
   // Initialize data storage on start
   Future<void> init() async {
     // Initialize Hive for the application
-    await Hive.initFlutter();
+    // await Hive.initFlutter(); // Already initialized in main.dart
     _tasksBox = await Hive.openBox('tasks');
     _habitsBox = await Hive.openBox('habits');
     _loadTasks();
