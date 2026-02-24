@@ -49,6 +49,26 @@ We believe spiritual apps should be distractions-free. Sakin is built on three c
 
 ---
 
+## 🎯 Our Vision & Mission | رؤيتنا وهدفنا
+We believe that technology should serve your faith, not distract you from it. 
+
+**Our Goal:** To provide the Muslim Ummah with a secure, powerful, and continuously evolving application that helps them maintain their daily prayers and spiritual habits. We are committed to keeping Sakin:
+- **100% Free and Open Source forever.**
+- **Completely devoid of intrusive ads or data tracking.**
+- **Reliable and offline-first**, so your spirituality isn't tied to a server status.
+
+---
+
+## 🔮 Future Roadmap | خططنا المستقبلية
+Sakin is an active, breathing project. We have massive plans for the future, and we are just getting started! Here is a sneak peek into what's coming:
+
+- 🧠 **AI-Powered Spiritual Assistant**: A smart, privacy-first companion that helps answer religious questions based on trusted sources, without leaving your device.
+- 📖 **Complete Quran Integration**: High-quality Othmani script pages with advanced search, bookmarking, and offline audio recitations.
+- 🌍 **Community Features**: Localized mosque specific prayer times mapping, community challenges for habits, and more.
+- ⌚ **Wearables Support**: Bringing Sakin to WearOS and Apple Watch for seamless tracking.
+
+---
+
 ## 📸 Screenshots | لقطات الشاشة
 
 ### 🌙 Dark Mode | الوضع الليلي
@@ -124,11 +144,19 @@ To build and run this project locally:
 
 ---
 
-## 🤝 Contribution | المساهمة
+## 🤝 Join The Movement | ساهم معنا
 
-We welcome contributions! This project is open-source to benefit the Ummah.
+Sakin is an open-source project created *by* Muslims, *for* Muslims. If you share our vision of a pure, ad-free Islamic app space, **we need you!**
+
+Whether you are a developer, designer, tester, or translator, your contribution is a Sadaqah Jariyah (Ongoing Charity).
+- **Developers**: Check out our open issues, tackle bugs, or build new features from our roadmap.
+- **Translators**: Help us bring Sakin to millions across the globe in their native languages.
+- **Designers**: Propose UI/UX improvements to keep the app feeling premium and serene.
+
+### Contribution Guidelines:
 - **Code Style**: Please use English for all code comments and commit messages.
 - **Architecture**: Stick to the existing folder structure and Clean Architecture principles.
+- **Discuss First**: For major features (like the upcoming AI integration), please open an issue or reach out to us first to discuss the architecture.
 
 ---
 
